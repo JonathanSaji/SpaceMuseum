@@ -11,9 +11,11 @@ public class SceneTeleporter : MonoBehaviour
 
     private void Start()
     {
-        var col = GetComponent<SphereCollider>();
-        col.isTrigger = true;
-        col.radius = radius;
+        if (TryGetComponent<SphereCollider>(out var col))
+        {
+            col.isTrigger = true;
+            col.radius = radius;
+        }
 
         _head = Camera.main?.transform;
     }
