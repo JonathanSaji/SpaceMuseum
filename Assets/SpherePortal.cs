@@ -6,16 +6,19 @@ using UnityEngine.InputSystem;
 
 public class SpherePortal : MonoBehaviour
 {
+    [Header("Scene")]
+    public string sceneToLoad;
+
     [Header("Hover Effect")]
     public float hoverScaleMultiplier = 1.2f;
     public float hoverSpeed = 5f;
     public Color hoverColor = new Color(0f, 0.8f, 1f);
 
     [Header("Input")]
-    public InputActionReference aButtonReference; // assign in Inspector
+    public InputActionReference aButtonReference;
 
     [Header("UI Prompt")]
-    public GameObject pressAPrompt; // assign a world-space UI canvas/text
+    public GameObject pressAPrompt;
 
     private XRGrabInteractable grab;
     private Vector3 originalScale;
@@ -27,8 +30,22 @@ public class SpherePortal : MonoBehaviour
     {
         grab = GetComponent<XRGrabInteractable>();
 
+        if (grab == null)
+        {
+            Debug.LogError("SpherePortal: No XRGrabInteractable found on " + gameObject.name);
+            return;
+        }
+
         originalScale = transform.localScale;
-        mat = GetComponent<Renderer>().material;
+
+        Renderer rend = GetComponentInChildren<Renderer>();
+        if (rend == null)
+        {
+            Debug.LogError("SpherePortal: No Renderer found on or in children of " + gameObject.name);
+            return;
+        }
+
+        mat = rend.material;
         originalColor = mat.color;
 
         grab.hoverEntered.AddListener(OnHoverEnter);
@@ -52,14 +69,20 @@ public class SpherePortal : MonoBehaviour
         if (isHovered && aButtonReference != null)
         {
             if (aButtonReference.action.WasPressedThisFrame())
-                SceneManager.LoadScene(1);
+            {
+                if (!string.IsNullOrEmpty(sceneToLoad))
+                    SceneManager.LoadScene(sceneToLoad);
+                else
+                    Debug.LogWarning("SpherePortal: sceneToLoad is empty on " + gameObject.name);
+            }
         }
     }
 
     void OnHoverEnter(HoverEnterEventArgs args)
     {
         isHovered = true;
-        mat.color = hoverColor;
+        if (mat != null)
+            mat.color = hoverColor;
 
         if (pressAPrompt != null)
             pressAPrompt.SetActive(true);
@@ -68,7 +91,8 @@ public class SpherePortal : MonoBehaviour
     void OnHoverExit(HoverExitEventArgs args)
     {
         isHovered = false;
-        mat.color = originalColor;
+        if (mat != null)
+            mat.color = originalColor;
 
         if (pressAPrompt != null)
             pressAPrompt.SetActive(false);
