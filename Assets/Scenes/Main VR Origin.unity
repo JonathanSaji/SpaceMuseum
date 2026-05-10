@@ -511,6 +511,8 @@ MonoBehaviour:
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
   m_StartingTargetFilter: {fileID: 0}
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -1479,6 +1481,8 @@ MonoBehaviour:
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
   m_StartingTargetFilter: {fileID: 0}
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -1884,6 +1888,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpherePortal
   sceneToLoad: 
+  hoverScaleMultiplier: 1.2
+  hoverSpeed: 5
+  hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
 --- !u!114 &1466907553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1956,6 +1963,8 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
   m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
@@ -2961,6 +2970,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpherePortal
   sceneToLoad: 
+  hoverScaleMultiplier: 1.2
+  hoverSpeed: 5
+  hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
 --- !u!114 &1827052902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3033,6 +3045,8 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
   m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
@@ -3762,7 +3776,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c1865b53ec9cc47be440ac2484b72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpherePortal
-  sceneToLoad: 
+  sceneToLoad: 360 Video Forest
+  hoverScaleMultiplier: 1.2
+  hoverSpeed: 5
+  hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
 --- !u!114 &2107980826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3835,6 +3852,8 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
   m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
