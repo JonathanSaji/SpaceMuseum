@@ -3309,7 +3309,7 @@ GameObject:
   - component: {fileID: 2107980826}
   - component: {fileID: 2107980825}
   m_Layer: 0
-  m_Name: ocean
+  m_Name: Ocean
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3434,9 +3434,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 718848997}
   m_Colliders:
-  - {fileID: 1895339626}
+  - {fileID: 1581235960}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
