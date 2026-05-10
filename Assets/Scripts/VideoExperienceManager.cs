@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 public class VideoExperienceManager : MonoBehaviour
@@ -10,6 +12,8 @@ public class VideoExperienceManager : MonoBehaviour
     private VideoPlayer _videoPlayer;
     private GameObject _videoDome;
     private RenderTexture _renderTexture;
+    private InputAction _leftGrip, _leftClick, _rightGrip, _rightClick;
+    private bool _playing;
 
     private void Awake()
     {
@@ -18,6 +22,20 @@ public class VideoExperienceManager : MonoBehaviour
         _videoDome = CreateVideoDome();
         _videoDome.SetActive(false);
         CreateVideoPlayer();
+        CreateExitInputs();
+    }
+
+    private void CreateExitInputs()
+    {
+        _leftGrip  = new InputAction("leftGrip",  binding: "<XRController>{LeftHand}/{Grip}");
+        _leftClick = new InputAction("leftClick", binding: "<XRController>{LeftHand}/{Primary2DAxisClick}");
+        _rightGrip  = new InputAction("rightGrip",  binding: "<XRController>{RightHand}/{Grip}");
+        _rightClick = new InputAction("rightClick", binding: "<XRController>{RightHand}/{Primary2DAxisClick}");
+
+        _leftGrip.Enable();
+        _leftClick.Enable();
+        _rightGrip.Enable();
+        _rightClick.Enable();
     }
 
     private void Start()
@@ -67,14 +85,38 @@ public class VideoExperienceManager : MonoBehaviour
 
     public void Play()
     {
+        _playing = true;
         _videoDome.SetActive(true);
         _videoPlayer.Play();
+        DisableLocomotion();
     }
 
     public void Stop()
     {
+        _playing = false;
         _videoPlayer.Stop();
         _videoDome.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (!_playing) return;
+
+        if (_leftGrip.IsPressed() && _leftClick.IsPressed() &&
+            _rightGrip.IsPressed() && _rightClick.IsPressed())
+        {
+            SceneManager.LoadScene("Main VR Origin");
+        }
+    }
+
+    private static void DisableLocomotion()
+    {
+        foreach (var mb in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
+        {
+            var name = mb.GetType().Name;
+            if (name is "ContinuousMoveProvider" or "ContinuousTurnProvider")
+                mb.enabled = false;
+        }
     }
 
     private void OnDestroy()
