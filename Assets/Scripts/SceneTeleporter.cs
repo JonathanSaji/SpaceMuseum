@@ -1,27 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
+[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(XRGrabInteractable))]
+[RequireComponent(typeof(Rigidbody))]
 public class SceneTeleporter : MonoBehaviour
 {
     [SerializeField] private string targetScene;
-    [SerializeField] private bool loadOnEnter = true;
+
+    private void Awake()
+    {
+        GetComponent<SphereCollider>().isTrigger = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Rigidbody>().useGravity = false;
+    }
 
     private void Start()
     {
-        GetComponent<SphereCollider>().isTrigger = true;
+        GetComponent<XRGrabInteractable>().selectEntered.AddListener(_ => LoadScene());
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void LoadScene()
     {
-        if (!loadOnEnter) return;
-        if (other.GetComponent<CharacterController>() != null)
-            SceneManager.LoadScene(targetScene);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (loadOnEnter) return;
-        if (other.GetComponent<CharacterController>() != null)
+        if (!string.IsNullOrEmpty(targetScene))
             SceneManager.LoadScene(targetScene);
     }
 }
