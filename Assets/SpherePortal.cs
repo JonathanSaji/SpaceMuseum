@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.InputSystem;
+using UnityEngine.XR;
+using System.Collections.Generic;
 
 public class SpherePortal : MonoBehaviour
 {
@@ -14,9 +15,6 @@ public class SpherePortal : MonoBehaviour
     public float hoverSpeed = 5f;
     public Color hoverColor = new Color(0f, 0.8f, 1f);
 
-    [Header("Input")]
-    public InputActionReference aButtonReference;
-
     [Header("UI Prompt")]
     public GameObject pressAPrompt;
 
@@ -25,6 +23,7 @@ public class SpherePortal : MonoBehaviour
     private Color originalColor;
     private Material mat;
     private bool isHovered = false;
+    private bool primaryButtonWasPressed = false;
 
     void Start()
     {
@@ -65,16 +64,28 @@ public class SpherePortal : MonoBehaviour
         transform.localScale = Vector3.Lerp(
             transform.localScale, targetScale, Time.deltaTime * hoverSpeed);
 
-        // Check A button only while hovered
-        if (isHovered && aButtonReference != null)
+        // Check primary button (A button on right controller) while hovered
+        if (isHovered)
         {
-            if (aButtonReference.action.WasPressedThisFrame())
+            InputDevice rightController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+            bool primaryButtonPressed = false;
+            rightController.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonPressed);
+
+            // WasPressedThisFrame equivalent — only fires once on press
+            if (primaryButtonPressed && !primaryButtonWasPressed)
             {
                 if (!string.IsNullOrEmpty(sceneToLoad))
                     SceneManager.LoadScene(sceneToLoad);
                 else
                     Debug.LogWarning("SpherePortal: sceneToLoad is empty on " + gameObject.name);
             }
+
+            primaryButtonWasPressed = primaryButtonPressed;
+        }
+        else
+        {
+            // Reset when not hovered so it doesn't fire immediately on next hover
+            primaryButtonWasPressed = false;
         }
     }
 

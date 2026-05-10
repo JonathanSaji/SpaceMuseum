@@ -1888,11 +1888,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c1865b53ec9cc47be440ac2484b72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpherePortal
-  sceneToLoad: 
+  sceneToLoad: 360 Video Forest
   hoverScaleMultiplier: 1.2
   hoverSpeed: 5
   hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
-  aButtonReference: {fileID: 0}
   pressAPrompt: {fileID: 0}
 --- !u!114 &1466907553
 MonoBehaviour:
@@ -1910,7 +1909,6 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.2
   hoverSpeed: 5
   hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
-  aButtonReference: {fileID: 0}
   pressAPrompt: {fileID: 0}
 --- !u!54 &1466907554
 Rigidbody:
@@ -2990,11 +2988,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c1865b53ec9cc47be440ac2484b72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpherePortal
-  sceneToLoad: 
+  sceneToLoad: 360 Video Forest
   hoverScaleMultiplier: 1.2
   hoverSpeed: 5
-  hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
-  aButtonReference: {fileID: 0}
+  hoverColor: {r: 0.41176474, g: 0.41176474, b: 0.41176474, a: 0.09019608}
   pressAPrompt: {fileID: 0}
 --- !u!54 &1827052903
 Rigidbody:
@@ -3800,11 +3797,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c1865b53ec9cc47be440ac2484b72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpherePortal
-  sceneToLoad: 
+  sceneToLoad: 360 Video Forest
   hoverScaleMultiplier: 1.2
   hoverSpeed: 5
   hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
-  aButtonReference: {fileID: 0}
   pressAPrompt: {fileID: 0}
 --- !u!114 &2107980826
 MonoBehaviour:
@@ -3822,7 +3818,6 @@ MonoBehaviour:
   hoverScaleMultiplier: 1.2
   hoverSpeed: 5
   hoverColor: {r: 0, g: 0.8, b: 1, a: 1}
-  aButtonReference: {fileID: 0}
   pressAPrompt: {fileID: 0}
 --- !u!54 &2107980827
 Rigidbody:
