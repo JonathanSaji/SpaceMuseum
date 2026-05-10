@@ -3,48 +3,38 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR;
-using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class SpherePortal : MonoBehaviour
 {
-    [Header("Scene")]
-    public string sceneToLoad;
-
     [Header("Hover Effect")]
     public float hoverScaleMultiplier = 1.2f;
     public float hoverSpeed = 5f;
     public Color hoverColor = new Color(0f, 0.8f, 1f);
 
+    [Header("Input")]
+    public InputActionReference aButtonReference; // assign in Inspector
+
     [Header("UI Prompt")]
-    public GameObject pressAPrompt;
+    public GameObject pressAPrompt; // assign a world-space UI canvas/text
 
     private XRGrabInteractable grab;
     private Vector3 originalScale;
     private Color originalColor;
     private Material mat;
     private bool isHovered = false;
-    private bool primaryButtonWasPressed = false;
 
     void Start()
     {
         grab = GetComponent<XRGrabInteractable>();
-
         if (grab == null)
-        {
-            Debug.LogError("SpherePortal: No XRGrabInteractable found on " + gameObject.name);
             return;
-        }
 
         originalScale = transform.localScale;
-
-        Renderer rend = GetComponentInChildren<Renderer>();
-        if (rend == null)
-        {
-            Debug.LogError("SpherePortal: No Renderer found on or in children of " + gameObject.name);
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer == null)
             return;
-        }
-
-        mat = rend.material;
+        mat = renderer.material;
         originalColor = mat.color;
 
         grab.hoverEntered.AddListener(OnHoverEnter);
@@ -64,36 +54,18 @@ public class SpherePortal : MonoBehaviour
         transform.localScale = Vector3.Lerp(
             transform.localScale, targetScale, Time.deltaTime * hoverSpeed);
 
-        // Check primary button (A button on right controller) while hovered
-        if (isHovered)
+        // Check A button only while hovered
+        if (isHovered && aButtonReference != null)
         {
-            InputDevice rightController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-            bool primaryButtonPressed = false;
-            rightController.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonPressed);
-
-            // WasPressedThisFrame equivalent — only fires once on press
-            if (primaryButtonPressed && !primaryButtonWasPressed)
-            {
-                if (!string.IsNullOrEmpty(sceneToLoad))
-                    SceneManager.LoadScene(sceneToLoad);
-                else
-                    Debug.LogWarning("SpherePortal: sceneToLoad is empty on " + gameObject.name);
-            }
-
-            primaryButtonWasPressed = primaryButtonPressed;
-        }
-        else
-        {
-            // Reset when not hovered so it doesn't fire immediately on next hover
-            primaryButtonWasPressed = false;
+            if (aButtonReference.action.WasPressedThisFrame())
+                SceneManager.LoadScene(1);
         }
     }
 
     void OnHoverEnter(HoverEnterEventArgs args)
     {
         isHovered = true;
-        if (mat != null)
-            mat.color = hoverColor;
+        mat.color = hoverColor;
 
         if (pressAPrompt != null)
             pressAPrompt.SetActive(true);
@@ -102,8 +74,7 @@ public class SpherePortal : MonoBehaviour
     void OnHoverExit(HoverExitEventArgs args)
     {
         isHovered = false;
-        if (mat != null)
-            mat.color = originalColor;
+        mat.color = originalColor;
 
         if (pressAPrompt != null)
             pressAPrompt.SetActive(false);
