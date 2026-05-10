@@ -1714,6 +1714,7 @@ GameObject:
   - component: {fileID: 1581235962}
   - component: {fileID: 1581235961}
   - component: {fileID: 1581235960}
+  - component: {fileID: 1581235964}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -1808,13 +1809,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581235959}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 2.013, y: 1.416, z: -2.33}
-  m_LocalScale: {x: 1.35, y: 1.35, z: 1.35}
+  m_LocalRotation: {x: -0, y: 0.92387956, z: -0, w: 0.38268343}
+  m_LocalPosition: {x: 0.0014142797, y: 0.014000058, z: 0.0014142796}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2107980824}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1581235964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581235959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd0e3a967a73ee4f96139663b862ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billboard
 --- !u!1 &1645948107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2568,7 +2581,8 @@ Transform:
   m_LocalPosition: {x: 2.011, y: 1.402, z: -2.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1581235963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!1660057539 &9223372036854775807
@@ -2590,4 +2604,3 @@ SceneRoots:
   - {fileID: 1827052900}
   - {fileID: 2107980824}
   - {fileID: 1466907551}
-  - {fileID: 1581235963}
