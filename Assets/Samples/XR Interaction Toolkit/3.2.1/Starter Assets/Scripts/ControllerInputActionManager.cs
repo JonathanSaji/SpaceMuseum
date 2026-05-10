@@ -457,14 +457,13 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 
         void UpdateLocomotionActions()
         {
-            // Disable/enable Teleport and Turn when Move is enabled/disabled.
             SetEnabled(m_Move, m_SmoothMotionEnabled);
             SetEnabled(m_TeleportMode, !m_SmoothMotionEnabled);
             SetEnabled(m_TeleportModeCancel, !m_SmoothMotionEnabled);
 
-            // Disable ability to turn when using continuous movement
-            SetEnabled(m_Turn, !m_SmoothMotionEnabled && m_SmoothTurnEnabled);
-            SetEnabled(m_SnapTurn, !m_SmoothMotionEnabled && !m_SmoothTurnEnabled);
+            // Turn is independent of move mode — enables left-stick move + right-stick turn
+            SetEnabled(m_Turn, m_SmoothTurnEnabled);
+            SetEnabled(m_SnapTurn, false);
         }
 
         void DisableTeleportActions()
