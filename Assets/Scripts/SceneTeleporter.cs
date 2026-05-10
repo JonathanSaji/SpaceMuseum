@@ -1,39 +1,44 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-[RequireComponent(typeof(SphereCollider))]
-[RequireComponent(typeof(XRGrabInteractable))]
-[RequireComponent(typeof(Rigidbody))]
 public class SceneTeleporter : MonoBehaviour
 {
     [SerializeField] private string targetScene;
+    [SerializeField] private float radius = 2f;
 
-    private void Awake()
-    {
-        // Collider must NOT be a trigger for grab to work.
-        var col = GetComponent<SphereCollider>();
-        col.isTrigger = false;
-
-        // Kinematic rigidbody — no gravity, no physics knock-away.
-        var rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        rb.useGravity = false;
-
-        // XR Grab Interactable — match every interaction layer so the
-        // controllers' Ray and Direct interactors can always find us.
-        var grab = GetComponent<XRGrabInteractable>();
-        grab.interactionLayers = -1; // all layers
-        grab.movementType = XRBaseInteractable.MovementType.Kinematic;
-    }
+    private Transform _head;
+    private bool _triggered;
 
     private void Start()
     {
-        GetComponent<XRGrabInteractable>().selectEntered.AddListener(_ =>
-        {
-            if (!string.IsNullOrEmpty(targetScene))
-                SceneManager.LoadScene(targetScene);
-        });
+        var col = GetComponent<SphereCollider>();
+        col.isTrigger = true;
+        col.radius = radius;
+
+        _head = Camera.main?.transform;
+    }
+
+    private void Update()
+    {
+        if (_triggered || _head == null) return;
+
+        if (Vector3.Distance(transform.position, _head.position) < radius)
+            Teleport();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_triggered) return;
+
+        if (other.GetComponent<CharacterController>() != null ||
+            other.GetComponentInParent<CharacterController>() != null)
+            Teleport();
+    }
+
+    private void Teleport()
+    {
+        if (_triggered) return;
+        _triggered = true;
+        SceneManager.LoadScene(targetScene);
     }
 }
